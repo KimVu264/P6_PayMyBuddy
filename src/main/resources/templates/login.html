@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<!--
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div id="login" class="col-sm-4" style="background-color: #F5F5F5">
+            <div class="logo">Pay My Buddy</div>
+            <form th:action="@{/login}" method="post" class="form-group">
+
+                <input type="text" name="email" placeholder="Email" class="form-control">
+
+                <input type="password" name="password" placeholder="Password" class="form-control">
+
+                <button type="submit" class="btn btn-primary form-control" style="margin-top: 10px;">Login</button>
+                <a class="btn btn-primary form-control" style="margin-top: 10px" href="/signup">Signup</a>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+</body>
+-->
+<body class="text-center">
+
+<form method="POST" th:action="@{/login}" class="form-signin">
+    <div class="logo">Pay My Buddy</div>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-primary form-control" type="submit">Log in</button>
+    <a class="btn btn-primary form-control" href="/signup">Signup</a>
+</form>
+</body>
+
+</html>
