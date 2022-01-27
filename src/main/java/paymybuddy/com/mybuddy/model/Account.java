@@ -1,30 +1,29 @@
 package paymybuddy.com.mybuddy.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
-@Data
-@Table(name = "account")
+@Table(name = "accounts")
 public class Account {
 
 	@Id
-	@Column(name="account_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long accountId;
+	private Long id;
 
-	@Column(name="number")
-	private int accountNumber;
+	private String accountNumber;
 
-	@Column(name = "amount")
-	//@Min(value = 0, message = "account balance must be positive")
-	//private BigDecimal balance;
-	private BigDecimal accountAmount;
+	private BigDecimal balance;
 
-	@OneToOne
-	@JoinColumn(name="user_id" )
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Transaction> transactions;
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Transaction> receiverTransactions;
 
 }

@@ -13,12 +13,12 @@ import java.util.Optional;
 @Repository
 @Transactional//(readOnly = true)
 public interface AccountRepository extends JpaRepository<Account, Long> {
-
+/*
 	Optional<Account> findByAccountId(Long id);
 
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Transactional
 	@Query("SELECT a FROM Account a WHERE a.accountId = ?1")
 	Optional<Account> getAccountForUpdate(Long id);
-
+*/
 }

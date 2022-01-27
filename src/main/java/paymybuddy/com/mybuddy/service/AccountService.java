@@ -1,26 +1,6 @@
 package paymybuddy.com.mybuddy.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
-import paymybuddy.com.mybuddy.constant.ErrorCode;
-import paymybuddy.com.mybuddy.exception.AccountNotExistException;
-import paymybuddy.com.mybuddy.exception.CheckBalanceException;
-import paymybuddy.com.mybuddy.exception.OverDraftException;
-import paymybuddy.com.mybuddy.exception.SystemException;
-import paymybuddy.com.mybuddy.model.Account;
-import paymybuddy.com.mybuddy.model.Transfer;
-import paymybuddy.com.mybuddy.repository.AccountRepository;
-
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.net.SocketTimeoutException;
 
 @Service
 public class AccountService {

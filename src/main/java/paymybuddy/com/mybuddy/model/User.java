@@ -1,23 +1,23 @@
 package paymybuddy.com.mybuddy.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "users")
 public class User {
 
 	@Id
-	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
-
-	@Column(name="user_name")
-	private String userName;
+	private Long id;
 
 	private String email;
 
@@ -25,9 +25,18 @@ public class User {
 
 	private String address;
 
-	private int tel;
+	private String tel;
 
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date birthday;
+
+	@OneToOne(mappedBy = "user")
+	private Account account;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Contact> contacts;
+
+	@OneToMany(mappedBy = "connectionUser", cascade = CascadeType.ALL)
+	private Set<Contact> connectionUsers;
 
 }

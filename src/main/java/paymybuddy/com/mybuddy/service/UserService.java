@@ -27,7 +27,6 @@ public class UserService {
 				return null;
 			}
 			User u = new User();
-			u.setUserName(user.getUserName());
 			u.setEmail(user.getEmail());
 			u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			u.setTel(user.getTel());
@@ -41,7 +40,7 @@ public class UserService {
 
 	public boolean isExistUserByEmail( User u) {
 		User user = userRepository.findByEmail(u.getEmail().trim());
-		if (user !=null){
+		if (user != null){
 			return true;
 		}
 		return false;

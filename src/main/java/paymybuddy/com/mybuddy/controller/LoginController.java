@@ -1,17 +1,19 @@
 package paymybuddy.com.mybuddy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import paymybuddy.com.mybuddy.model.User;
 import paymybuddy.com.mybuddy.service.UserService;
 
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
@@ -19,35 +21,37 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	// Return page login
+	//Return page login
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
-	/*
-	 Return page signup
-	@GetMapping("/signup")
-	public String signupGet() {
-		return "signup";
-	}
-	@PostMapping("/signup_post")
-	public String signupPost(@RequestParam("userName") String userName,
-					         @RequestParam("email") String email,
-	                         @RequestParam("password") String password,
-						     @RequestParam("address") String address,
-						     @RequestParam("tel") int tel,
-						     @RequestParam("birthday") Date birthday) {
 
-		User u = new User();
-		u.setUserName(userName);
-		u.setEmail(email);
-		u.setPassword(password);
-		u.setAddress(address);
-		u.setTel(tel);
-		u.setBirthday(birthday);
-		userService.createUser(u);
-		return "redirect:/login";
-	}*/
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginPage(@RequestParam(value = "error", required = false) String error,
+	                        @RequestParam(value = "logout", required = false) String logout,
+	                        Model model) {
+		String errorMessge = null;
+		if(error != null) {
+			errorMessge = "Username or Password is incorrect !!";
+		}
+		if(logout != null) {
+			errorMessge = "You have been successfully logged out !!";
+		}
+		model.addAttribute("errorMessge", errorMessge);
+		return "login";
+	}
+
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login?logout=true";
+	}
+
+	//https://kipalog.com/posts/Lap-trinh-Spring-voi-ung-dung-MyContact
 
 	@GetMapping("/signup")
 	public String signupGet(Model model) {

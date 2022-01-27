@@ -7,31 +7,20 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 </head>
-<!--
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div id="login" class="col-sm-4" style="background-color: #F5F5F5">
-            <div class="logo">Pay My Buddy</div>
-            <form th:action="@{/login}" method="post" class="form-group">
 
-                <input type="text" name="email" placeholder="Email" class="form-control">
-
-                <input type="password" name="password" placeholder="Password" class="form-control">
-
-                <button type="submit" class="btn btn-primary form-control" style="margin-top: 10px;">Login</button>
-                <a class="btn btn-primary form-control" style="margin-top: 10px" href="/signup">Signup</a>
-            </form>
-        </div>
-        <div class="col-sm-4"></div>
-    </div>
-</div>
-</body>
--->
 <body class="text-center">
 
-<form method="POST" th:action="@{/login}" class="form-signin">
+<!-- /login?error=true -->
+<!--
+<th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+    <div th:if= "${#request.getParameter('error') == 'true'}"
+         style="color: red; margin: 10px 0px;">
+        Login Failed!!!<br /> Reason :
+        <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
+    </div>
+</th:block>
+-->
+<form method="POST" th:action="@{/j_spring_security_check}" class="form-signin">
     <div class="logo">Pay My Buddy</div>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
