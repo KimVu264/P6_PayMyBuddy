@@ -1,12 +1,16 @@
 package paymybuddy.com.mybuddy.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
 

@@ -22,27 +22,39 @@ public class LoginController {
 	private UserService userService;
 
 	//Return page login
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	 */
+
+	@RequestMapping("/login")
+	public ModelAndView login(@RequestParam(required=false) boolean error){
+		ModelAndView mav = new ModelAndView("login");
+		if(error) mav.addObject("error", error);
+		return mav;
+	}
+
+	/*
+	@PostMapping("/login")
 	public String loginPage(@RequestParam(value = "error", required = false) String error,
 	                        @RequestParam(value = "logout", required = false) String logout,
 	                        Model model) {
-		String errorMessge = null;
+		String errorMessage = null;
 		if(error != null) {
-			errorMessge = "Username or Password is incorrect !!";
+			errorMessage = "Email or Password is incorrect !!";
 		}
 		if(logout != null) {
-			errorMessge = "You have been successfully logged out !!";
+			errorMessage = "You have been successfully logged out !!";
 		}
-		model.addAttribute("errorMessge", errorMessge);
+		model.addAttribute("errorMessage", errorMessage);
 		return "login";
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	 */
+
+	@GetMapping("/logout")
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null){
@@ -51,8 +63,7 @@ public class LoginController {
 		return "redirect:/login?logout=true";
 	}
 
-	//https://kipalog.com/posts/Lap-trinh-Spring-voi-ung-dung-MyContact
-
+	// return page signup
 	@GetMapping("/signup")
 	public String signupGet(Model model) {
 		 /* model sẽ giúp truyền data lên html*/

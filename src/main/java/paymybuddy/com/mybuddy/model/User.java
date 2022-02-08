@@ -1,17 +1,21 @@
 package paymybuddy.com.mybuddy.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -33,10 +37,11 @@ public class User {
 	@OneToOne(mappedBy = "user")
 	private Account account;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Contact> contacts;
+	@OneToMany
+	@JoinTable( name = "contacts",
+			joinColumns = @JoinColumn( name = "id" ),
+			inverseJoinColumns = @JoinColumn( name = "user_id" ) )
+	private Set<User> contacts = new HashSet<>();
 
-	@OneToMany(mappedBy = "connectionUser", cascade = CascadeType.ALL)
-	private Set<Contact> connectionUsers;
 
 }

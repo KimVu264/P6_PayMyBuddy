@@ -16,8 +16,6 @@
             <!-- th:object ?? map d? li?u trên form-->
             <form th:action="@{/signup}" method="POST" th:object="${user}" class="form-group">
             <!-- map các tr??ng t??ng ?ng dung th:field="*{fieldName}"-->
-                <label>UserName</label>
-                <input type="text" name="user_name" placeholder="Input user_name" class="form-control" th:field="*{userName}">
 
                 <label>Email</label>
                 <input type="text" name="email" placeholder="Input email" class="form-control" th:field="*{email}">
@@ -29,7 +27,7 @@
                 <input type="text" name="address" placeholder="Input address" class="form-control" th:field="*{address}">
 
                 <label>Tel number</label>
-                <input type="tel" name="tel" placeholder="Input tel number" class="form-control">
+                <input type="texte" name="tel" placeholder="Input tel number" class="form-control">
 
                 <label>Birthday</label>
                 <input type="date" name="birthday" placeholder="Input birthday" class="form-control" >

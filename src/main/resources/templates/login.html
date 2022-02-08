@@ -20,8 +20,13 @@
     </div>
 </th:block>
 -->
-<form method="POST" th:action="@{/j_spring_security_check}" class="form-signin">
+
+<form method="POST" th:action="@{/login}" class="form-signin">
     <div class="logo">Pay My Buddy</div>
+    <!--
+    <p th:if="${param.error}" class="error">Invalid email or password</p>
+    <p th:if="${param.logout}" class="success">You have been logged out</p> -->
+
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
@@ -33,6 +38,9 @@
     </div>
     <button class="btn btn-primary form-control" type="submit">Log in</button>
     <a class="btn btn-primary form-control" href="/signup">Signup</a>
+    <a class = "form-control" href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/login-google&response_type=code
+    &client_id=1020088288006-7svlc1ln6ji4d4reg03ide2u2d3lm5cu.apps.googleusercontent.com.com&approval_prompt=force">Login With Google </a>
+
 </form>
 </body>
 
