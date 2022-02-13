@@ -1,39 +1,41 @@
 package paymybuddy.com.mybuddy.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import paymybuddy.com.mybuddy.exception.UserExisted;
+import paymybuddy.com.mybuddy.model.Account;
 import paymybuddy.com.mybuddy.model.User;
+import paymybuddy.com.mybuddy.repository.AccountRepository;
 import paymybuddy.com.mybuddy.repository.UserRepository;
+import paymybuddy.com.mybuddy.util.AccountUtil;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.math.BigDecimal;
 
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final AccountRepository accountRepository;
+
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public UserService(UserRepository userRepository, AccountRepository accountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.userRepository = userRepository;
+		this.accountRepository = accountRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
 	/**
 	 * Create user
 	 * @param user
 	 * @return
 	 */
-	public User createUser(User user) {
+	public User createUser(User user) throws UserExisted {
 		if (user.getEmail() != null)
 		{
 			if(isExistUserByEmail(user)) {
-				return null;
+				throw new UserExisted();
 			}
 			User u = new User();
 			u.setEmail(user.getEmail());
@@ -42,6 +44,14 @@ public class UserService {
 			u.setAddress(user.getAddress());
 			u.setBirthday(user.getBirthday());
 			userRepository.save(u);
+			Account account = Account.builder()
+					.balance(BigDecimal.ZERO)
+					.user(u)
+					.accountNumber(AccountUtil.generateNewAccountNumber())
+					.build();
+			Account savedAccount = accountRepository.save(account);
+			u.setAccount(savedAccount);
+			u = userRepository.save(u);
 			return u;
 		}
 		return null;
@@ -53,10 +63,6 @@ public class UserService {
 			return true;
 		}
 		return false;
-	}
-
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
 	}
 
 }

@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
     <title>Insert title here</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-12 text-center">
             <h2>Signup</h2>
+            <p class="errorMsg" th:if="${errorMsg}" th:text="${errorMsg}"</p>
         </div>
+
         <div class="col-sm-4"></div>
         <div class="col-sm-4" style="background-color: #F5F5F5">
-            <!-- th:object ?? map d? li?u trên form-->
             <form th:action="@{/signup}" method="POST" th:object="${user}" class="form-group">
-            <!-- map các tr??ng t??ng ?ng dung th:field="*{fieldName}"-->
 
-                <label>Email</label>
-                <input type="text" name="email" placeholder="Input email" class="form-control" th:field="*{email}">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Input email" required class="form-control" th:field="*{email}">
+                <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Input password" class="form-control" th:field="*{password}">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Input password" required class="form-control" th:field="*{password}">
+                <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
 
-                <label>Address</label>
-                <input type="text" name="address" placeholder="Input address" class="form-control" th:field="*{address}">
+                <label for="address">Address</label>
+                <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
+                <input type="text" id="address" name="address" placeholder="Input address" required class="form-control" th:field="*{address}">
 
-                <label>Tel number</label>
-                <input type="texte" name="tel" placeholder="Input tel number" class="form-control">
+                <label for="tel">Tel number</label>
+                <p th:if="${#fields.hasErrors('tel')}" th:errorclass="error" th:errors="*{tel}"></p>
+                <input type="text" id="tel" name="tel" placeholder="Input tel number" required class="form-control" th:field="*{tel}">
 
-                <label>Birthday</label>
-                <input type="date" name="birthday" placeholder="Input birthday" class="form-control" >
+                <label for="birthday">Birthday</label>
+                <p th:if="${#fields.hasErrors('birthday')}" th:errorclass="error" th:errors="*{birthday}"></p>
+                <input type="date" id="birthday" name="birthday" placeholder="Input birthday" required class="form-control" th:field="*{birthday}">
 
                 <input type="submit" class="btn btn-primary form-control" style="margin-top: 10px;" value="signup">
             </form>

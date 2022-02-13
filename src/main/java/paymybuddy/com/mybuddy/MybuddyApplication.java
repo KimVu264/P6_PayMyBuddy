@@ -12,9 +12,4 @@ public class MybuddyApplication {
 		SpringApplication.run(MybuddyApplication.class, args);
 	}
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 }

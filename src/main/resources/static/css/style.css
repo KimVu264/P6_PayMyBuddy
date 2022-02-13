@@ -17,15 +17,18 @@
 }
 */
 
-.form-control {
-    margin-top: 30px;
+.errorMsg {
+    text-align: center;
+    color: red;
 }
-
-
 
 
 body {
     height: 100%;
+}
+
+.error {
+    color: red;
 }
 
 body {

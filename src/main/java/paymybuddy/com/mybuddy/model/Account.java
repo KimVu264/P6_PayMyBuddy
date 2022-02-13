@@ -1,9 +1,6 @@
 package paymybuddy.com.mybuddy.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "accounts")
 public class Account {
 
@@ -30,7 +28,7 @@ public class Account {
 	private User user;
 
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-	private Set<Transaction> transactions;
+	private Set<Transaction> senderTransactions;
 
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Transaction> receiverTransactions;

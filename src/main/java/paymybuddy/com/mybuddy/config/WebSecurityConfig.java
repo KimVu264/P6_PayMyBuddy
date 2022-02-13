@@ -10,59 +10,49 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final UserDetailsServiceImpl userDetailsService;
 
-
-	@Autowired
-	private BCryptPasswordEncoder bcrypt;
-
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bcrypt);
-	}
-
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http
-				.authorizeRequests()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/signup").permitAll()
-				.anyRequest().authenticated()
-
-				.and()
-				.formLogin()
-				//.loginProcessingUrl("/j_spring_security_check")
-				.loginPage("/login")
-				.usernameParameter("email")
-				.passwordParameter("password")
-				.defaultSuccessUrl("/homepage", true)
-				.failureUrl("/login?error=true")
-
-				//.and()
-				//.oauth2Login()
-
-				.and()
-				.logout()
-				.logoutUrl("/j_spring_security_logout")
-				.logoutSuccessUrl("/login?message=logout");
-
-	}
-
-	public void configure(WebSecurity web) {
-		web.ignoring()
-				.antMatchers("/css/*")
-				.antMatchers("/js/*");
+	public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.csrf().disable();
+
+		http.authorizeRequests().antMatchers("/signup")
+				.permitAll();
+
+		http.authorizeRequests().antMatchers("/", "/homepage")
+				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+
+		http.authorizeRequests().and()
+				.exceptionHandling().accessDeniedPage("/403");
+
+		http.authorizeRequests().and().formLogin()
+				.loginProcessingUrl("/login/process")
+				.loginPage("/login")
+				.defaultSuccessUrl("/homePage")
+				.failureUrl("/login?error=true")
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout=true");
 	}
 
 }
