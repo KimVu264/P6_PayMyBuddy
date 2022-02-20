@@ -19,7 +19,7 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String accountNumber;
+	//private String accountNumber;
 
 	private BigDecimal balance;
 
@@ -28,7 +28,7 @@ public class Account {
 	private User user;
 
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-	private Set<Transaction> senderTransactions;
+	private Set<Transaction> Transactions;
 
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Transaction> receiverTransactions;

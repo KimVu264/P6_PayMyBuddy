@@ -2,6 +2,7 @@ package paymybuddy.com.mybuddy.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import paymybuddy.com.mybuddy.exception.UserDoesNotExist;
 import paymybuddy.com.mybuddy.exception.UserExisted;
 import paymybuddy.com.mybuddy.model.Account;
 import paymybuddy.com.mybuddy.model.User;
@@ -44,14 +45,16 @@ public class UserService {
 			u.setAddress(user.getAddress());
 			u.setBirthday(user.getBirthday());
 			userRepository.save(u);
+
 			Account account = Account.builder()
-					.balance(BigDecimal.ZERO)
+					.balance(new BigDecimal(200.00))
 					.user(u)
-					.accountNumber(AccountUtil.generateNewAccountNumber())
+					//.accountNumber(AccountUtil.generateNewAccountNumber())
 					.build();
 			Account savedAccount = accountRepository.save(account);
 			u.setAccount(savedAccount);
 			u = userRepository.save(u);
+
 			return u;
 		}
 		return null;
@@ -63,6 +66,14 @@ public class UserService {
 			return true;
 		}
 		return false;
+	}
+
+	public User getUserByEmail(String email) throws UserDoesNotExist {
+		User user = userRepository.findByEmail(email);
+		if (user == null) {
+			throw new UserDoesNotExist();
+		}
+		return user;
 	}
 
 }

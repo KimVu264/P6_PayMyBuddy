@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="topnav">
+    <a th:href="@{/logout}">Log off</a>
+    <a class="active" th:href="@{/contact}">Contact</a>
+    <a th:href="@{/profile}">Profile</a>
+    <a th:href="@{/transfer}">Transfer</a>
+    <a th:href="@{/homePage}">Home</a>
+    <a id="logo" th:href="@{/homePage}">Pay My Buddy</a>
+</div>
+
+<div class="gl">
+    <a class="agl" th:href="@{/homePage}">Home</a>
+    /
+    <a class="agl" th:href="@{/contact}">Contact</a>
+</div>
+
+<div style="padding-left:16px">
+    <hr>
+    <h4>Contact</h4>
+    <div class="container">
+
+        <div class="alert alert-primary" role="alert" th:text="${addToContactMsgSuc}" th:if="${addToContactMsgSuc}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${addToContactMsgErr}" th:if="${addToContactMsgErr}"></div>
+
+        <form th:action="@{/searchContact}">
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+            <button type="submit" style="background-color: #11f476" class="btn btn-default">Search</button>
+        </form>
+
+        <hr>
+
+        <div th:if="${searchResult}" class="searchAccountResult">
+            <p th:text="|Email : ${searchResult.email}|"></p>
+            <p th:text="|Tel: ${searchResult.tel}|"></p>
+            <p th:text="|Address: ${searchResult.address}|"></p>
+            <p th:text="|Birthday: ${searchResult.birthday}|"></p>
+           <!--
+            <p th:text="|BankAccount: ${searchResult.account.accountNumber}|"></p>
+            -->
+            <form th:action="@{/addToContact}">
+                <input th:value="${searchResult.email}" type="email" class="form-control" hidden placeholder="Enter email" name="email">
+                <button type="submit" style="background-color: #11f476" class="btn btn-default">Add to contact</button>
+            </form>
+        </div>
+
+        <div th:if="${searchError}" class="searchAccountResult">
+            <p th:text="${searchError}"></p>
+        </div>
+
+        <hr>
+        <br>
+
+        <table class="table table-striped sampleTable" id="mytableID"
+               style="width:100%">
+            <tr>
+                <th>Email</th>
+                <th>Tel</th>
+                <th>Address</th>
+                <th>Birthday</th>
+                <th>BankAccount</th>
+            </tr>
+            <tbody th:each="user : ${contacts}" th:remove="tag">
+                <tr>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.tel}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td th:text="${user.birthday}"></td>
+                    <!--
+                    <td th:text="${user.account.accountNumber}"></td>
+                    -->
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".sampleTable").fancyTable({
+            /* Column number for initial sorting*/
+            sortColumn: 0,
+            /* Setting pagination or enabling */
+            pagination: true,
+            /* Rows per page kept for display */
+            perPage: 10
+        });
+
+    });
+</script>
+
+</body>
+
+</html>
