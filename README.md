@@ -18,6 +18,7 @@ Config in file applications.properties:
 
 # Structure 
 Créer dossier config pour config spring security. 
+
 Ensuite dossiers controller, model, repository, service et exception
 
 # Diagramme de classe UML 
