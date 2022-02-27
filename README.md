@@ -17,11 +17,11 @@ Config in file applications.properties:
  [ ] spring.jpa.show-sql=true``
 
 # Structure 
-Créer dossier config pour config spring security
+Créer dossier config pour config spring security. 
 Ensuite dossiers controller, model, repository, service et exception
 
 # Diagramme de classe UML 
-https://github.com/kimvu264/paymybuddy/files/8148448/Diagramme.UML.transfert.d.argent.pdf
+![UML](https://github.com/kimvu264/paymybuddy/files/8148448/Diagramme.UML.transfert.d.argent.pdf)
 
 # Le modèle physique de données
 ![MPD2](https://user-images.githubusercontent.com/71970977/155877923-24c99497-05a9-4b86-bfab-5810f350a5ee.png)
