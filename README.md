@@ -9,13 +9,17 @@ Il faut ensuite ouvrir le dossier avec IntelliJ ou Eclipse.
 # Configuration
 
 Config in file applications.properties:
+- > server.port=8080
 
-> server.port=8080
-spring.datasource.url=jdbc:mysql://localhost:3306/paymybuddy?serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=Root123.
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+- spring.datasource.url=jdbc:mysql://localhost:3306/paymybuddy?serverTimezone=UTC
+
+- spring.datasource.username=root
+
+- spring.datasource.password=Root123.
+
+- spring.jpa.hibernate.ddl-auto=update
+
+- spring.jpa.show-sql=true
 
 # Structure 
 Créer dossier config pour config spring security. 
