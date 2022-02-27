@@ -7,105 +7,89 @@
     <link th:href="@{/css/home.css}" rel="stylesheet">
 </head>
 <body>
-    <div class="topnav">
-        <a th:href="@{/logout}">Log off</a>
-        <a th:href="@{/contact}">Contact</a>
-        <a th:href="@{/profile}">Profile</a>
-        <a class="active" th:href="@{/transfer}">Transfer</a>
-        <a th:href="@{/homePage}">Home</a>
-        <a id="logo" th:href="@{/homePage}">Pay My Buddy</a>
-    </div>
+<div class="topnav">
+    <a th:href="@{/logout}">Log off</a>
+    <a th:href="@{/contact}">Contact</a>
+    <a th:href="@{/profile}">Profile</a>
+    <a class="active" th:href="@{/transfer}">Transfer</a>
+    <a th:href="@{/homePage}">Home</a>
+    <a id="logo" th:href="@{/homePage}">Pay My Buddy</a>
+</div>
 
-    <div class="gl">
-        <a class="agl" th:href="@{/homePage}">Home</a>
-        /
-        <a class="agl" th:href="@{/transfer}">Transfer</a>
-    </div>
+<div class="gl">
+    <a class="agl" th:href="@{/homePage}">Home</a>
+    /
+    <a class="agl" th:href="@{/transfer}">Transfer</a>
+</div>
 
-    <div style="padding-left:16px">
-        <hr>
-        <h4>Transfer money</h4>
-        <div class="container">
+<div style="padding-left:16px">
+    <hr>
+    <h4>Transfer money</h4>
+    <div class="container">
 
-            <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
-            <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 
-            <div style="width: 100%">
-                <h4 style="float: left; width: 50%">Send Money</h4>
-                <div style="width: 50%; text-align: right; float: right;">
-                    <a id="addConnection" th:href="@{/contact}">Add connection</a>
-                </div>
+        <div style="width: 100%">
+            <h6>Send Money</h6>
+            <div style="width: 50%; text-align: right; float: right;">
+                <a id="addConnection" th:href="@{/contact}">Add connection</a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <form th:action="@{/transferMoney}">
+            <div class="form-group">
+                <label style="padding: 0; float: left" for="connection">Select a connection</label>
+                <select class="form-control" id="connection" name="connection">
+                    <option value="" selected="selected">Select a connection</option>
+                    <tbody th:each="user : ${contacts}" th:remove="tag">
+                    <option th:value="${user.email}" th:text="${user.email}"></option>
+                    </tbody>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label style="padding: 0;" for="motif">Description</label>
+                <input required type="motif" class="form-control" id="motif" placeholder="Enter description"
+                       name="motif">
             </div>
 
-            <br>
-            <hr>
-            <form th:action="@{/transferMoney}">
-                <div class="form-group">
-                    <label style="padding: 0;" for="connection">Select a connection</label>
-                    <select class="form-control" id="connection" name="connection">
+            <div class="form-group">
+                <label for="quantity">Amount</label>
+                <input required type="number" id="quantity" name="quantity" step="0.01" min="0" placeholder="0€">
+            </div>
+            <button type="submit" style="background-color: #11f476" class="btn btn-default">Pay</button>
+        </form>
 
-                        <tbody th:each="user : ${contacts}" th:remove="tag">
-                            <option th:value="${user.email}" th:text="${user.email}"></option>
-                        </tbody>
+        <br>
+        <h6>My Transactions</h6>
+        <table class="table table-striped sampleTable" id="mytableID"
+               style="width:100%; border: 2px solid black;">
+            <tr>
+                 <th>Connections</th>
+                 <th>Description</th>
+                 <th>Amount</th>
+            </tr>
+            <tbody th:each="trans : ${transactions}" th:remove="tag">
+            <tr>
+                <td th:text="${trans.receiver.user.firstName}"></td>
+                <td th:text="${trans.motif}"></td>
+                <td th:text="${trans.amount } + '€'"></td>
+            </tr>
+            </tbody>
+        </table>
 
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label style="padding: 0;" for="motif">Description</label>
-                    <input required type="motif" class="form-control" id="motif" placeholder="Enter description" name="motif">
-                </div>
+        <footer style="text-align: center">
+            Total transactions:  [[${totalItems}]],  Page [[${currentPage}]] of [[${totalPages}]]
+            &nbsp; &nbsp; - &nbsp;
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+               <a th:href="@{'/transfer/page/' + ${i}}">[[${i}]]</a>
+               &nbsp; - &nbsp;
+            </span>
+        </footer>
 
-                <div class="form-group">
-                    <label style="padding: 0;" for="quantity">Amount</label>
-                    <input required type="number" id="quantity" name="quantity" step="0.01">
-                </div>
-                <button type="submit" style="background-color: #11f476" class="btn btn-default">Pay</button>
-            </form>
-
-            <hr>
-            <br>
-
-            <table class="table table-striped sampleTable" id="mytableID"
-                   style="width:100%">
-                <tr>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Description</th>
-                    <th>Datetime</th>
-                    <th>Amount</th>
-                </tr>
-                <tbody th:each="trans : ${transactions}" th:remove="tag">
-                <tr>
-                    <td th:text="${trans.sender.user.email}"></td>
-                    <td th:text="${trans.receiver.user.email}"></td>
-                    <td th:text="${trans.motif}"></td>
-                    <td th:text="${trans.datetime}"></td>
-                    <td th:text="${trans.amount}"></td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $(".sampleTable").fancyTable({
-                /* Column number for initial sorting*/
-                sortColumn: 0,
-                /* Setting pagination or enabling */
-                pagination: true,
-                /* Rows per page kept for display */
-                perPage: 10
-            });
-
-        });
-    </script>
+</div>
 </body>
 </html>

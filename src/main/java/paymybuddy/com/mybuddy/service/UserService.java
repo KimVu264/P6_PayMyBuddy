@@ -8,7 +8,6 @@ import paymybuddy.com.mybuddy.model.Account;
 import paymybuddy.com.mybuddy.model.User;
 import paymybuddy.com.mybuddy.repository.AccountRepository;
 import paymybuddy.com.mybuddy.repository.UserRepository;
-import paymybuddy.com.mybuddy.util.AccountUtil;
 
 import java.math.BigDecimal;
 
@@ -39,6 +38,8 @@ public class UserService {
 				throw new UserExisted();
 			}
 			User u = new User();
+			u.setFirstName(user.getFirstName());
+			u.setLastName(user.getLastName());
 			u.setEmail(user.getEmail());
 			u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			u.setTel(user.getTel());
