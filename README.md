@@ -29,7 +29,7 @@ Créer dossier config pour config spring security.
 Ensuite dossiers controller, model, repository, service et exception
 
 # Diagramme de classe UML 
-![diagramme](https://github.com/kimvu264/paymybuddy/files/8148469/Diagramme.UML.transfert.d.argent.pdf)
+![diagramme UML](https://user-images.githubusercontent.com/71970977/155895466-6c110819-7bb8-4877-a60e-aceb53224b94.JPG)
 
 # Le modèle physique de données
 ![MPD2](https://user-images.githubusercontent.com/71970977/155877923-24c99497-05a9-4b86-bfab-5810f350a5ee.png)
