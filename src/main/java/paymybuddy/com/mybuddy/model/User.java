@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -23,16 +22,28 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotEmpty(message = "User's first name cannot be empty.")
+	@NotNull(message = "User's first name cannot be null.")
 	private String firstName;
 
+	@NotEmpty(message = "User's last name cannot be empty.")
+	@NotNull(message = "User's last name cannot be null.")
 	private String lastName;
 
+	@NotEmpty(message = "User's email cannot be empty.")
+	@NotNull(message = "User's email cannot be null.")
 	private String email;
 
+	@NotEmpty(message = "User's password cannot be empty.")
+	@NotNull(message = "User's password cannot be null.")
 	private String password;
 
+	@NotEmpty(message = "User's address cannot be empty.")
+	@NotNull(message = "User's address cannot be null.")
 	private String address;
 
+	@NotEmpty(message = "User's tel cannot be empty.")
+	@NotNull(message = "User's tel cannot be null.")
 	private String tel;
 
 	@DateTimeFormat(pattern = "yyyy-mm-dd")

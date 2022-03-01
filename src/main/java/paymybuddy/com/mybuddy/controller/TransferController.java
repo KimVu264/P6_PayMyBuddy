@@ -1,7 +1,6 @@
 package paymybuddy.com.mybuddy.controller;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,7 @@ import paymybuddy.com.mybuddy.service.UserService;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class TransferController {

@@ -59,6 +59,7 @@
         <table class="table table-striped sampleTable" id="mytableID"
                style="width:100%">
             <tr>
+                <th>Name</th>
                 <th>Email</th>
                 <th>Tel</th>
                 <th>Address</th>
@@ -66,6 +67,7 @@
             </tr>
             <tbody th:each="user : ${contacts}" th:remove="tag">
                 <tr>
+                    <td th:text="${user.firstName}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.tel}"></td>
                     <td th:text="${user.address}"></td>

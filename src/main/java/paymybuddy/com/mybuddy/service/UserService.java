@@ -28,8 +28,8 @@ public class UserService {
 
 	/**
 	 * Create user
-	 * @param user
-	 * @return
+	 * @param user with the informations for saving in database
+	 * @return an user who has not yet existed in database
 	 */
 	public User createUser(User user) throws UserExisted {
 		if (user.getEmail() != null)
@@ -50,7 +50,6 @@ public class UserService {
 			Account account = Account.builder()
 					.balance(new BigDecimal(200.00))
 					.user(u)
-					//.accountNumber(AccountUtil.generateNewAccountNumber())
 					.build();
 			Account savedAccount = accountRepository.save(account);
 			u.setAccount(savedAccount);

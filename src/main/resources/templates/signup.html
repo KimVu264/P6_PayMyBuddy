@@ -27,7 +27,7 @@
                 <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
 
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" placeholder="Input email" required class="form-control" th:field="*{email}">
+                <input type="email" id="email" name="email" placeholder="Input email" required class="form-control" th:field="*{email}">
                 <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 
                 <label for="password">Password</label>
